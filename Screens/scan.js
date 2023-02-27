@@ -49,12 +49,12 @@ class Scan extends Component {
                     </View>
                     {!scan && !ScanResult &&
                         <View style={styles.cardView} >
-                            <Image source={require('../assets/camera.png')} style={{ height: 36, width: 36 }}></Image>
-                            <Text numberOfLines={8} style={styles.descText}>Move your camera {"\n"} over the QR Code</Text>
+                            */}
+                            <Text numberOfLines={ {/* <Image source={require('../assets/camera.png')} style={{ height: 36, width: 36 }}></Image>8} style={styles.descText}>Move your camera {"\n"} over the QR Code</Text>
                             <Image source={require('../assets/qr-code.png')} style={{ margin: 20 }}></Image>
                             <TouchableOpacity onPress={this.activeQR} style={styles.buttonScan}>
                                 <View style={styles.buttonWrapper}>
-                                    <Image source={require('../assets/camera.png')} style={{ height: 36, width: 36 }}></Image>
+                                    {/* <Image source={require('../assets/camera.png')} style={{ height: 36, width: 36 }}></Image> */}
                                     <Text style={{ ...styles.buttonTextStyle, color: '#2196f3' }}>Scan QR Code</Text>
                                 </View>
                             </TouchableOpacity>
