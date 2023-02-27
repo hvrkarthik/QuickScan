@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { BackHandler, Image, ImageBackground, Linking, Text, TouchableOpacity, View } from 'react-native';
 import QRCodeScanner from 'react-native-qrcode-scanner';
-import styles from './scanStyle';
+import styles from './Styles';
 
 class Scan extends Component {
     constructor(props) {
