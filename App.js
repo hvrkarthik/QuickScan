@@ -1,5 +1,5 @@
 import React from 'react';
-import Scan from './Screens/scan';
+import Scan from './Screens/Scan';
 const App = () => {
   return (
     <Scan />
