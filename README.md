@@ -1,1 +1,1 @@
-# QRscanner
+# QuickScan
