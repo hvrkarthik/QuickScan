@@ -9,7 +9,7 @@ import {
   BackHandler,
 } from "react-native";
 import QRCodeScanner from "react-native-qrcode-scanner";
-import styles from "./styles.js";
+import styles from "./Styles";
 
 class Scan extends Component {
   constructor(props) {
@@ -20,6 +20,21 @@ class Scan extends Component {
       result: null,
     };
   }
+
+  componentDidMount() {
+    this.backHandler = BackHandler.addEventListener("hardwareBackPress", () => {
+      if (this.state.ScanResult) {
+        this.setState({ scan: true, ScanResult: false });
+        return true; 
+      }
+      return false; 
+    });
+  }
+
+  componentWillUnmount() {
+    this.backHandler.remove(); // Remove the listener when the component unmounts
+  }
+
   onSuccess = (e) => {
     const check = e.data.substring(0, 4);
     console.log("scanned data" + check);
@@ -30,7 +45,7 @@ class Scan extends Component {
     });
     if (check === "http") {
       Linking.openURL(e.data).catch((err) =>
-        console.error("An error occured", err)
+        console.error("An error occurred", err)
       );
     } else {
       this.setState({
@@ -40,41 +55,31 @@ class Scan extends Component {
       });
     }
   };
+
   activeQR = () => {
     this.setState({ scan: true });
   };
+
   scanAgain = () => {
     this.setState({ scan: true, ScanResult: false });
   };
+
   render() {
     const { scan, ScanResult, result } = this.state;
     return (
       <View style={styles.scrollViewStyle}>
         <Fragment>
-          <View style={styles.header}>
-            <TouchableOpacity onPress={() => BackHandler.exitApp()}>
-              <Image
-                source={require("../assets/back.png")}
-                style={{ height: 36, width: 36 }}
-              ></Image>
-            </TouchableOpacity>
-            <Text style={styles.textTitle}>Scan QR Code</Text>
-          </View>
           {!scan && !ScanResult && (
             <View style={styles.cardView}>
               <Text numberOfLines={8} style={styles.descText}>
-                Please move your camera {"\n"} over the QR Code
+                Please press 'Scan QR Code' below to start scanning.
               </Text>
               <Image
                 source={require("../assets/camera.png")}
                 style={{ margin: 20 }}
               ></Image>
-              <TouchableOpacity
-                onPress={this.activeQR}
-                style={styles.buttonScan}
-              >
+              <TouchableOpacity onPress={this.activeQR} style={styles.buttonScan}>
                 <View style={styles.buttonWrapper}>
-                 
                   <Text style={{ ...styles.buttonTextStyle, color: "#2196f3" }}>
                     Scan QR Code
                   </Text>
@@ -82,29 +87,21 @@ class Scan extends Component {
               </TouchableOpacity>
             </View>
           )}
-          {ScanResult && (
-            <Fragment>
-              <Text style={styles.textTitle1}>Result</Text>
-              <View style={ScanResult ? styles.scanCardView : styles.cardView}>
-                <Text>Type : {result.type}</Text>
-                <Text>Result : {result.data}</Text>
-                <Text numberOfLines={1}>RawData: {result.rawData}</Text>
-                <TouchableOpacity
-                  onPress={this.scanAgain}
-                  style={styles.buttonScan}
-                >
-                  <View style={styles.buttonWrapper}>
-                    <Text
-                      style={{ ...styles.buttonTextStyle, color: "#2196f3" }}
-                    >
-                      Click to scan again
-                    </Text>
-                    
-                  </View>
-                </TouchableOpacity>
-              </View>
-            </Fragment>
-          )}
+         {ScanResult && (
+  <Fragment>
+    <Text style={styles.textTitle1}>Result</Text>
+    <View style={ScanResult ? styles.scanCardView : styles.cardView}>
+      <Text>Type: {result.type}</Text>
+      <Text>Result: {result.data}</Text>
+      <Text>RawData: {result.rawData}</Text>
+
+      {/* Add a button or touchable area to go back to the scan screen */}
+      <TouchableOpacity onPress={this.scanAgain}>
+        <Text>Go back</Text>
+      </TouchableOpacity>
+    </View>
+  </Fragment>
+)}
           {scan && (
             <QRCodeScanner
               reactivate={true}
@@ -119,14 +116,12 @@ class Scan extends Component {
                 </Text>
               }
               bottomContent={
-                <View>         
-                    <TouchableOpacity
-                      style={styles.buttonScan2}
-                      onPress={() => this.scanner.reactivate()}
-                      onLongPress={() => this.setState({ scan: false })}
-                    > 
-                    </TouchableOpacity>
-
+                <View>
+                  <TouchableOpacity
+                    style={styles.buttonScan2}
+                    onPress={() => this.scanner.reactivate()}
+                    onLongPress={() => this.setState({ scan: false })}
+                  ></TouchableOpacity>
                 </View>
               }
             />
@@ -136,4 +131,5 @@ class Scan extends Component {
     );
   }
 }
+
 export default Scan;
