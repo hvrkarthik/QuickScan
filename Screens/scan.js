@@ -25,9 +25,9 @@ class Scan extends Component {
     this.backHandler = BackHandler.addEventListener("hardwareBackPress", () => {
       if (this.state.ScanResult) {
         this.setState({ scan: true, ScanResult: false });
-        return true; 
+        return true;
       }
-      return false; 
+      return false;
     });
   }
 
@@ -87,21 +87,22 @@ class Scan extends Component {
               </TouchableOpacity>
             </View>
           )}
-         {ScanResult && (
-  <Fragment>
-    <Text style={styles.textTitle1}>Result</Text>
-    <View style={ScanResult ? styles.scanCardView : styles.cardView}>
-      <Text>Type: {result.type}</Text>
-      <Text>Result: {result.data}</Text>
-      <Text>RawData: {result.rawData}</Text>
 
-      {/* Add a button or touchable area to go back to the scan screen */}
-      <TouchableOpacity onPress={this.scanAgain}>
-        <Text>Go back</Text>
-      </TouchableOpacity>
-    </View>
-  </Fragment>
-)}
+          {ScanResult && (
+            <Fragment>
+              <Text style={styles.textTitle1}>Result</Text>
+              <View style={ScanResult ? styles.scanCardView : styles.cardView}>
+                <Text>Type: {result.type}</Text>
+                <Text>Result: {result.data}</Text>
+                <Text>RawData: {result.rawData}</Text>
+
+                <TouchableOpacity onPress={this.scanAgain}>
+                  <Text>Scan Again</Text>
+                </TouchableOpacity>
+              </View>
+            </Fragment>
+          )}
+
           {scan && (
             <QRCodeScanner
               reactivate={true}
