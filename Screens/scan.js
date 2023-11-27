@@ -1,12 +1,11 @@
 import React, { Component, Fragment } from "react";
 import {
-  TouchableOpacity,
-  Text,
-  Linking,
-  View,
-  Image,
-  ImageBackground,
   BackHandler,
+  Image,
+  Linking,
+  Text,
+  TouchableOpacity,
+  View
 } from "react-native";
 import QRCodeScanner from "react-native-qrcode-scanner";
 import styles from "./Styles";
@@ -32,7 +31,7 @@ class Scan extends Component {
   }
 
   componentWillUnmount() {
-    this.backHandler.remove(); // Remove the listener when the component unmounts
+    this.backHandler.remove(); 
   }
 
   onSuccess = (e) => {
